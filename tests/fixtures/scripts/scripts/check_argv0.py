@@ -1,20 +1,17 @@
 from __future__ import annotations
 
+import os
 import sys
-
-from pathlib import Path
 
 
 def main() -> int:
-    path = Path(sys.argv[0])
-    if sys.argv[1] == "absolute":
-        if not path.is_absolute():
-            raise RuntimeError(f"sys.argv[0] is not an absolute path: {path}")
-        if not path.exists():
-            raise RuntimeError(f"sys.argv[0] does not exist: {path}")
+    if sys.argv[0] == sys.argv[1]:
+        if not os.path.exists(sys.argv[0]):
+            raise RuntimeError(f"sys.argv[0] does not exist: {sys.argv[0]}")
     else:
-        if path.is_absolute():
-            raise RuntimeError(f"sys.argv[0] is an absolute path: {path}")
+        raise RuntimeError(
+            f"unexpected sys.argv[0]: '{sys.argv[0]}', should be '{sys.argv[1]}'"
+        )
 
     return 0
 
