@@ -1,0 +1,27 @@
+{
+  "name": "wheel",
+  "files": [
+    {
+      "filename": "wheel-0.31.0-py2.py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/1b/d2/22cde5ea9af055f81814f9f2545f5ed8a053eb749c08d186b369959189a8/wheel-0.31.0-py2.py3-none-any.whl",
+      "hashes": {
+        "blake2b_256": "1bd222cde5ea9af055f81814f9f2545f5ed8a053eb749c08d186b369959189a8",
+        "md5": "240d714477a715bcd90e94cb2c44f28c",
+        "sha256": "9cdc8ab2cc9c3c2e2727a4b67c22881dbb0e1c503d592992594c5e131c867107"
+      }
+    },
+    {
+      "filename": "wheel-0.31.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/5d/c1/45947333669b31bc6b4933308dd07c2aa2fedcec0a95b14eedae993bd449/wheel-0.31.0.tar.gz",
+      "hashes": {
+        "blake2b_256": "5dc145947333669b31bc6b4933308dd07c2aa2fedcec0a95b14eedae993bd449",
+        "md5": "b0fa0e058de28cd159de39790379ccf6",
+        "sha256": "1ae8153bed701cb062913b72429bcf854ba824f973735427681882a688cb55ce"
+      }
+    }
+  ],
+  "meta": {
+    "api-version": "1.0",
+    "_last-serial": 15716458
+  }
+}

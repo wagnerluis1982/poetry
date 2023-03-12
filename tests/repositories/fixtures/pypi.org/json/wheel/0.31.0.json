@@ -1,0 +1,115 @@
+{
+  "info": {
+    "author": "Daniel Holth",
+    "author_email": "dholth@fastmail.fm",
+    "bugtrack_url": null,
+    "classifiers": [
+      "Development Status :: 5 - Production/Stable",
+      "Intended Audience :: Developers",
+      "License :: OSI Approved :: MIT License",
+      "Programming Language :: Python",
+      "Programming Language :: Python :: 2",
+      "Programming Language :: Python :: 2.7",
+      "Programming Language :: Python :: 3",
+      "Programming Language :: Python :: 3.4",
+      "Programming Language :: Python :: 3.5",
+      "Programming Language :: Python :: 3.6"
+    ],
+    "description": "Wheel\n=====\n\nA built-package format for Python.\n\nA wheel is a ZIP-format archive with a specially formatted filename\nand the .whl extension. It is designed to contain all the files for a\nPEP 376 compatible install in a way that is very close to the on-disk\nformat. Many packages will be properly installed with only the \"Unpack\"\nstep (simply extracting the file onto sys.path), and the unpacked archive\npreserves enough information to \"Spread\" (copy data and scripts to their\nfinal locations) at any later time.\n\nThe wheel project provides a `bdist_wheel` command for setuptools\n(requires setuptools >= 0.8.0). Wheel files can be installed with a\nnewer `pip` from https://github.com/pypa/pip or with wheel's own command\nline utility.\n\nThe wheel documentation is at https://wheel.readthedocs.io/. The file format is\ndocumented in PEP 427 (https://www.python.org/dev/peps/pep-0427/).\n\nThe reference implementation is at https://github.com/pypa/wheel\n\nWhy not egg?\n------------\n\nPython's egg format predates the packaging related standards we have\ntoday, the most important being PEP 376 \"Database of Installed Python\nDistributions\" which specifies the .dist-info directory (instead of\n.egg-info) and PEP 426 \"Metadata for Python Software Packages 2.0\"\nwhich specifies how to express dependencies (instead of requires.txt\nin .egg-info).\n\nWheel implements these things. It also provides a richer file naming\nconvention that communicates the Python implementation and ABI as well\nas simply the language version used in a particular package.\n\nUnlike .egg, wheel will be a fully-documented standard at the binary\nlevel that is truly easy to install even if you do not want to use the\nreference implementation.\n\n\nCode of Conduct\n---------------\n\nEveryone interacting in the wheel project's codebases, issue trackers, chat\nrooms, and mailing lists is expected to follow the `PyPA Code of Conduct`_.\n\n.. _PyPA Code of Conduct: https://www.pypa.io/en/latest/code-of-conduct/\n\n\n0.31.0\n======\n- Fixed displaying of errors on Python 3\n- Fixed single digit versions in wheel files not being properly recognized\n- Fixed wrong character encodings being used (instead of UTF-8) to read and\n  write ``RECORD`` (this sometimes crashed bdist_wheel too)\n- Enabled Zip64 support in wheels by default\n- Metadata-Version is now 2.1\n- Dropped DESCRIPTION.rst and metadata.json from the list of generated files\n- Dropped support for the non-standard, undocumented ``provides-extra`` and\n  ``requires-dist`` keywords in setup.cfg metadata\n- Deprecated all wheel signing and signature verification commands\n- Removed the (already defunct) ``tool`` extras from setup.py\n\n0.30.0\n======\n- Added py-limited-api {cp32|cp33|cp34|...} flag to produce cpNN.abi3.{arch}\n  tags on CPython 3.\n- Documented the ``license_file`` metadata key\n- Improved Python, abi tagging for `wheel convert`. Thanks Ales Erjavec.\n- Fixed `>` being prepended to lines starting with \"From\" in the long description\n- Added support for specifying a build number (as per PEP 427).\n  Thanks Ian Cordasco.\n- Made the order of files in generated ZIP files deterministic.\n  Thanks Matthias Bach.\n- Made the order of requirements in metadata deterministic. Thanks Chris Lamb.\n- Fixed `wheel install` clobbering existing files\n- Improved the error message when trying to verify an unsigned wheel file\n- Removed support for Python 2.6, 3.2 and 3.3.\n\n0.29.0\n======\n- Fix compression type of files in archive (Issue #155, Pull Request #62,\n  thanks Xavier Fernandez)\n\n0.28.0\n======\n- Fix file modes in archive (Issue #154)\n\n0.27.0\n======\n- Support forcing a platform tag using `--plat-name` on pure-Python wheels, as\n  well as nonstandard platform tags on non-pure wheels (Pull Request #60, Issue\n  #144, thanks Andrés Díaz)\n- Add SOABI tags to platform-specific wheels built for Python 2.X (Pull Request\n  #55, Issue #63, Issue #101)\n- Support reproducible wheel files, wheels that can be rebuilt and will hash to\n  the same values as previous builds (Pull Request #52, Issue #143, thanks\n  Barry Warsaw)\n- Support for changes in keyring >= 8.0 (Pull Request #61, thanks Jason R.\n  Coombs)\n- Use the file context manager when checking if dependency_links.txt is empty,\n  fixes problems building wheels under PyPy on Windows  (Issue #150, thanks\n  Cosimo Lupo)\n- Don't attempt to (recursively) create a build directory ending with `..`\n  (invalid on all platforms, but code was only executed on Windows) (Issue #91)\n- Added the PyPA Code of Conduct (Pull Request #56)\n\n0.26.0\n======\n- Fix multiple entrypoint comparison failure on Python 3 (Issue #148)\n\n0.25.0\n======\n- Add Python 3.5 to tox configuration\n- Deterministic (sorted) metadata\n- Fix tagging for Python 3.5 compatibility\n- Support py2-none-'arch' and py3-none-'arch' tags\n- Treat data-only wheels as pure\n- Write to temporary file and rename when using wheel install --force\n\n0.24.0\n======\n- The python tag used for pure-python packages is now .pyN (major version\n  only). This change actually occurred in 0.23.0 when the --python-tag\n  option was added, but was not explicitly mentioned in the changelog then.\n- wininst2wheel and egg2wheel removed. Use \"wheel convert [archive]\"\n  instead.\n- Wheel now supports setuptools style conditional requirements via the\n  extras_require={} syntax. Separate 'extra' names from conditions using\n  the : character. Wheel's own setup.py does this. (The empty-string\n  extra is the same as install_requires.) These conditional requirements\n  should work the same whether the package is installed by wheel or\n  by setup.py.\n\n0.23.0\n======\n- Compatibility tag flags added to the bdist_wheel command\n- sdist should include files necessary for tests\n- 'wheel convert' can now also convert unpacked eggs to wheel\n- Rename pydist.json to metadata.json to avoid stepping on the PEP\n- The --skip-scripts option has been removed, and not generating scripts is now\n  the default. The option was a temporary approach until installers could\n  generate scripts themselves. That is now the case with pip 1.5 and later.\n  Note that using pip 1.4 to install a wheel without scripts will leave the\n  installation without entry-point wrappers. The \"wheel install-scripts\"\n  command can be used to generate the scripts in such cases.\n- Thank you contributors\n\n0.22.0\n======\n- Include entry_points.txt, scripts a.k.a. commands, in experimental\n  pydist.json\n- Improved test_requires parsing\n- Python 2.6 fixes, \"wheel version\" command courtesy pombredanne\n\n0.21.0\n======\n- Pregenerated scripts are the default again.\n- \"setup.py bdist_wheel --skip-scripts\" turns them off.\n- setuptools is no longer a listed requirement for the 'wheel'\n  package. It is of course still required in order for bdist_wheel\n  to work.\n- \"python -m wheel\" avoids importing pkg_resources until it's necessary.\n\n0.20.0\n======\n- No longer include console_scripts in wheels. Ordinary scripts (shell files,\n  standalone Python files) are included as usual.\n- Include new command \"python -m wheel install-scripts [distribution\n  [distribution ...]]\" to install the console_scripts (setuptools-style\n  scripts using pkg_resources) for a distribution.\n\n0.19.0\n======\n- pymeta.json becomes pydist.json\n\n0.18.0\n======\n- Python 3 Unicode improvements\n\n0.17.0\n======\n- Support latest PEP-426 \"pymeta.json\" (json-format metadata)\n\n0.16.0\n======\n- Python 2.6 compatibility bugfix (thanks John McFarlane)\n- Non-prerelease version number\n\n1.0.0a2\n=======\n- Bugfix for C-extension tags for CPython 3.3 (using SOABI)\n\n1.0.0a1\n=======\n- Bugfix for bdist_wininst converter \"wheel convert\"\n- Bugfix for dists where \"is pure\" is None instead of True or False\n\n1.0.0a0\n=======\n- Update for version 1.0 of Wheel (PEP accepted).\n- Python 3 fix for moving Unicode Description to metadata body\n- Include rudimentary API documentation in Sphinx (thanks Kevin Horn)\n\n0.15.0\n======\n- Various improvements\n\n0.14.0\n======\n- Changed the signature format to better comply with the current JWS spec.\n  Breaks all existing signatures.\n- Include ``wheel unsign`` command to remove RECORD.jws from an archive.\n- Put the description in the newly allowed payload section of PKG-INFO\n  (METADATA) files.\n\n0.13.0\n======\n- Use distutils instead of sysconfig to get installation paths; can install\n  headers.\n- Improve WheelFile() sort.\n- Allow bootstrap installs without any pkg_resources.\n\n0.12.0\n======\n- Unit test for wheel.tool.install\n\n0.11.0\n======\n- API cleanup\n\n0.10.3\n======\n- Scripts fixer fix\n\n0.10.2\n======\n- Fix keygen\n\n0.10.1\n======\n- Preserve attributes on install.\n\n0.10.0\n======\n- Include a copy of pkg_resources. Wheel can now install into a virtualenv\n  that does not have distribute (though most packages still require\n  pkg_resources to actually work; wheel install distribute)\n- Define a new setup.cfg section [wheel]. universal=1 will\n  apply the py2.py3-none-any tag for pure python wheels.\n\n0.9.7\n=====\n- Only import dirspec when needed. dirspec is only needed to find the\n  configuration for keygen/signing operations.\n\n0.9.6\n=====\n- requires-dist from setup.cfg overwrites any requirements from setup.py\n  Care must be taken that the requirements are the same in both cases,\n  or just always install from wheel.\n- drop dirspec requirement on win32\n- improved command line utility, adds 'wheel convert [egg or wininst]' to\n  convert legacy binary formats to wheel\n\n0.9.5\n=====\n- Wheel's own wheel file can be executed by Python, and can install itself:\n  ``python wheel-0.9.5-py27-none-any/wheel install ...``\n- Use argparse; basic ``wheel install`` command should run with only stdlib\n  dependencies.\n- Allow requires_dist in setup.cfg's [metadata] section. In addition to\n  dependencies in setup.py, but will only be interpreted when installing\n  from wheel, not from sdist. Can be qualified with environment markers.\n\n0.9.4\n=====\n- Fix wheel.signatures in sdist\n\n0.9.3\n=====\n- Integrated digital signatures support without C extensions.\n- Integrated \"wheel install\" command (single package, no dependency\n  resolution) including compatibility check.\n- Support Python 3.3\n- Use Metadata 1.3 (PEP 426)\n\n0.9.2\n=====\n- Automatic signing if WHEEL_TOOL points to the wheel binary\n- Even more Python 3 fixes\n\n0.9.1\n=====\n- 'wheel sign' uses the keys generated by 'wheel keygen' (instead of generating\n  a new key at random each time)\n- Python 2/3 encoding/decoding fixes\n- Run tests on Python 2.6 (without signature verification)\n\n0.9\n===\n- Updated digital signatures scheme\n- Python 3 support for digital signatures\n- Always verify RECORD hashes on extract\n- \"wheel\" command line tool to sign, verify, unpack wheel files\n\n0.8\n===\n- none/any draft pep tags update\n- improved wininst2wheel script\n- doc changes and other improvements\n\n0.7\n===\n- sort .dist-info at end of wheel archive\n- Windows & Python 3 fixes from Paul Moore\n- pep8\n- scripts to convert wininst & egg to wheel\n\n0.6\n===\n- require distribute >= 0.6.28\n- stop using verlib\n\n0.5\n===\n- working pretty well\n\n0.4.2\n=====\n- hyphenated name fix\n\n0.4\n===\n- improve test coverage\n- improve Windows compatibility\n- include tox.ini courtesy of Marc Abramowitz\n- draft hmac sha-256 signing function\n\n0.3\n===\n- prototype egg2wheel conversion script\n\n0.2\n===\n- Python 3 compatibility\n\n0.1\n===\n- Initial version\n\n\n",
+    "description_content_type": "",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/pypa/wheel",
+    "keywords": "wheel,packaging",
+    "license": "MIT",
+    "maintainer": "Alex Grönholm",
+    "maintainer_email": "alex.gronholm@nextday.fi",
+    "name": "wheel",
+    "package_url": "https://pypi.org/project/wheel/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/wheel/",
+    "project_urls": {
+      "Homepage": "https://github.com/pypa/wheel"
+    },
+    "release_url": "https://pypi.org/project/wheel/0.31.0/",
+    "requires_dist": [
+      "ed25519ll; extra == 'faster-signatures'",
+      "keyring; extra == 'signatures'",
+      "keyrings.alt; extra == 'signatures'",
+      "pyxdg; (sys_platform!=\"win32\") and extra == 'signatures'",
+      "pytest (>=3.0.0); extra == 'test'",
+      "pytest-cov; extra == 'test'"
+    ],
+    "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
+    "summary": "A built-package format for Python.",
+    "version": "0.31.0",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 15716458,
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "1bd222cde5ea9af055f81814f9f2545f5ed8a053eb749c08d186b369959189a8",
+        "md5": "240d714477a715bcd90e94cb2c44f28c",
+        "sha256": "9cdc8ab2cc9c3c2e2727a4b67c22881dbb0e1c503d592992594c5e131c867107"
+      },
+      "downloads": -1,
+      "filename": "wheel-0.31.0-py2.py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "240d714477a715bcd90e94cb2c44f28c",
+      "packagetype": "bdist_wheel",
+      "python_version": "py2.py3",
+      "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
+      "size": 41546,
+      "upload_time": "2018-04-01T20:40:42",
+      "upload_time_iso_8601": "2018-04-01T20:40:42.458633Z",
+      "url": "https://files.pythonhosted.org/packages/1b/d2/22cde5ea9af055f81814f9f2545f5ed8a053eb749c08d186b369959189a8/wheel-0.31.0-py2.py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "blake2b_256": "5dc145947333669b31bc6b4933308dd07c2aa2fedcec0a95b14eedae993bd449",
+        "md5": "b0fa0e058de28cd159de39790379ccf6",
+        "sha256": "1ae8153bed701cb062913b72429bcf854ba824f973735427681882a688cb55ce"
+      },
+      "downloads": -1,
+      "filename": "wheel-0.31.0.tar.gz",
+      "has_sig": false,
+      "md5_digest": "b0fa0e058de28cd159de39790379ccf6",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
+      "size": 38528,
+      "upload_time": "2018-04-01T20:40:43",
+      "upload_time_iso_8601": "2018-04-01T20:40:43.591483Z",
+      "url": "https://files.pythonhosted.org/packages/5d/c1/45947333669b31bc6b4933308dd07c2aa2fedcec0a95b14eedae993bd449/wheel-0.31.0.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "aliases": [
+        "CVE-2022-40898"
+      ],
+      "details": "Python Packaging Authority (PyPA) Wheel is a reference implementation of the Python wheel packaging standard. Wheel 0.37.1 and earlier are vulnerable to a Regular Expression denial of service via attacker controlled input to the wheel cli. The vulnerable regex is used to verify the validity of Wheel file names. This has been patched in version 0.38.1.",
+      "fixed_in": [
+        "0.38.1"
+      ],
+      "id": "GHSA-qwmp-2cf2-g9g6",
+      "link": "https://osv.dev/vulnerability/GHSA-qwmp-2cf2-g9g6",
+      "source": "osv",
+      "summary": null,
+      "withdrawn": null
+    }
+  ]
+}
