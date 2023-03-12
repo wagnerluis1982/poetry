@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import itertools
 import json
+import sys
 
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -14,6 +15,7 @@ from cleo.io.io import IO
 from cleo.io.null_io import NullIO
 from cleo.io.outputs.buffered_output import BufferedOutput
 from cleo.io.outputs.output import Verbosity
+from cleo.io.outputs.stream_output import StreamOutput
 from poetry.core.packages.dependency_group import MAIN_GROUP
 from poetry.core.packages.dependency_group import DependencyGroup
 from poetry.core.packages.package import Package
@@ -1155,7 +1157,13 @@ def test_installer_with_pypi_repository(
     pool.add_repository(MockRepository())
 
     installer = Installer(
-        NullIO(), env, package, locker, pool, config, installed=installed
+        IO(Input(), StreamOutput(sys.stdout), StreamOutput(sys.stderr)),
+        env,
+        package,
+        locker,
+        pool,
+        config,
+        installed=installed,
     )
 
     package.add_dependency(Factory.create_dependency("pytest", "^3.5", groups=["dev"]))
